@@ -29,10 +29,13 @@ Setiap pusingan: 4 saat bersedia → 1:45 bertempur. Mati = tonton rakan sepasuk
 
 ## Online
 - **Mod:** 1v1 · 2v2 · 3v3. **Kawan bot** (suis): pasukan dilengkapkan bot hingga 5 orang. 1v1 = bot ON secara lalai, 2v2/3v3 = manusia sahaja (boleh tukar).
+- **🤝 Co-op lawan Bot:** pilih mod Co-op → Buat Bilik → ajak kawan dari senarai online atau kongsi kod. Semua pemain (hingga 5) masuk pasukan HARIMAU, tempat kosong diisi kawan bot, lawan pasukan bot HELANG. Hos pilih kawasan 1–10 = level kesukaran bot. Menang dikira dalam rekod 🤖 (rating tak berubah).
 - **Buat Bilik** — dapat kod 5 huruf, kawan masuk guna kod. Hos pilih peta, pemain boleh **Tukar Pasukan**, hos tekan **Mula Sekarang** (tempat kosong diisi bot).
 - **Ajak** pemain dari senarai online → mereka masuk ke bilik anda.
 - Rangkaian: hos (pencipta bilik) jalankan permainan & bot; tetamu sambung terus **P2P (WebRTC)**. Jika P2P tak dapat, automatik guna **Relay Firestore**. Label ⚡ P2P / ☁️ Relay dipapar di kiri atas.
-- Pemain keluar → bot ambil alih watak dia. Hos keluar → perlawanan tamat.
+- Pemain keluar → bot ambil alih watak dia, dan hos **ajak 2 pemain online secara automatik** untuk ganti. Pemain baru (melalui ajakan atau kod bilik) **boleh masuk di tengah perlawanan** dan ambil alih slot bot itu.
+- Butang **➕** (atas kanan semasa main online) untuk ajak pemain online sendiri bila-bila masa.
+- Hos keluar → perlawanan tamat.
 - Rating ELO + pangkat 🥉 Gangsa → 🥈 Perak (1100) → 🥇 Emas (1250) → 💠 Platinum (1400) → 💎 Berlian (1600) → 👑 Legenda (1800).
 
 ## Kawalan
@@ -43,6 +46,12 @@ Setiap pusingan: 4 saat bersedia → 1:45 bertempur. Mati = tonton rakan sepasuk
 - **Saiz paparan:** dalam mod PC semua ikon, butang, peta mini & HUD dibesarkan ikut saiz skrin. Pilih S / M / L / **MAX** (lalai MAX = paling besar yang muat).
 - **Ubah sendiri:** tekan butang kekunci dalam senarai → tekan kekunci baru (Backspace = kosongkan, Esc = batal). Kekunci yang sama dibuang dari tindakan lain secara automatik.
 - Ada kekunci **pandang kiri/kanan/atas/bawah** — sesuai untuk laptop guna touchpad. **Kepekaan tetikus** boleh dilaras berasingan.
+
+## Kelancaran (v1.3)
+- Tukar senjata beranimasi: senjata lama turun, senjata baru naik (0.4s).
+- Skop sniper masuk/keluar licin: senapang naik ke mata, zum & bulatan skop pudar masuk.
+- Pandangan dilicinkan sedikit (sentuh & tetikus), rekoil kamera lembut, kamera condong sedikit bila bergerak ke tepi, hentakan kecil bila mendarat, senjata bergoyang ikut pusingan.
+- Masa bingkai dilicinkan + **resolusi dinamik**: jika FPS jatuh, resolusi turun sendiri supaya permainan kekal lancar, dan naik semula bila laju.
 
 ## Grafik
 Enjin **WebGL 3D sendiri** dalam `index.html` (tiada library luar — ringan & boleh main misi bot offline): peta bertekstur prosedur (bata, peti, kontena, jubin, tingkap bercahaya waktu malam), bayang lembut, kabus, langit, pokok, kereta, kren, askar 3D beranimasi, senjata tangan dengan rekoil & animasi isi peluru, kesan peluru, asap & letupan.
