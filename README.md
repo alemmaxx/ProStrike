@@ -29,7 +29,6 @@ Setiap pusingan: 4 saat bersedia → 1:45 bertempur. Mati = tonton rakan sepasuk
 
 ## Online
 - **Mod:** 1v1 · 2v2 · 3v3. **Kawan bot** (suis): pasukan dilengkapkan bot hingga 5 orang. 1v1 = bot ON secara lalai, 2v2/3v3 = manusia sahaja (boleh tukar).
-- **Cari Lawan** — padan pemain rating hampir sama. Bila bilik penuh, perlawanan mula sendiri (atau selepas 30s jika ada ≥2 pemain).
 - **Buat Bilik** — dapat kod 5 huruf, kawan masuk guna kod. Hos pilih peta, pemain boleh **Tukar Pasukan**, hos tekan **Mula Sekarang** (tempat kosong diisi bot).
 - **Ajak** pemain dari senarai online → mereka masuk ke bilik anda.
 - Rangkaian: hos (pencipta bilik) jalankan permainan & bot; tetamu sambung terus **P2P (WebRTC)**. Jika P2P tak dapat, automatik guna **Relay Firestore**. Label ⚡ P2P / ☁️ Relay dipapar di kiri atas.
@@ -39,7 +38,7 @@ Setiap pusingan: 4 saat bersedia → 1:45 bertempur. Mati = tonton rakan sepasuk
 ## Kawalan
 **Telefon:** joystick kiri (gerak) · seret skrin kanan (pandang) · 🔫 TEMBAK (boleh seret untuk bidik sambil tembak) · 🎯 SKOP · 🔄 ISI · ⤴️ LOMPAT · ⬇️ TUNDUK · 💣 · 💨 · ketik ikon senjata di bawah untuk tukar.
 **Tetapan:** kepekaan pandangan, **tembak automatik** (tembak sendiri bila crosshair pada musuh — sesuai budak/pemula), **bantuan bidik**, butang tembak kiri, kualiti grafik, butang besar.
-**PC / laptop:** Tetapan → hidupkan **Main guna PC** (lalai ON bila dibuka di komputer). Semua butang skrin sentuh disembunyikan; kawal guna papan kekunci + tetikus (klik skrin untuk kunci tetikus, Esc = rehat).
+**PC / laptop:** Tetapan → hidupkan **Main guna PC** (lalai ON bila dibuka di komputer). Semua butang skrin sentuh disembunyikan; kawal guna papan kekunci + tetikus (tetikus hanya dikunci bila anda klik skrin permainan; tekan **Esc** untuk lepaskan tetikus — game berehat. Bila anda klik tetingkap lain / alt-tab, game berehat & berhenti melukis supaya komputer tak lag).
 - **Susunan kekunci siap:** ⌨️ WASD · ⬆️ Anak Panah (gerak guna anak panah, pandang guna W/A/S/D, tembak X, skop Z) · 🔢 Nombor (gerak 8/4/5/6 pada numpad atau baris nombor, tembak Enter).
 - **Saiz paparan:** dalam mod PC semua ikon, butang, peta mini & HUD dibesarkan ikut saiz skrin. Pilih S / M / L / **MAX** (lalai MAX = paling besar yang muat).
 - **Ubah sendiri:** tekan butang kekunci dalam senarai → tekan kekunci baru (Backspace = kosongkan, Esc = batal). Kekunci yang sama dibuang dari tindakan lain secara automatik.

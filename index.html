@@ -93,7 +93,7 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 .seg.sm{background:rgba(12,18,22,.75);backdrop-filter:blur(6px)}.seg.sm button{padding:6px 10px;font-size:13px}
 .hIcon{width:40px;height:40px;border-radius:12px;background:rgba(12,18,22,.75);border:1px solid rgba(255,255,255,.14);font-size:19px;display:grid;place-items:center}
 .hMain{flex:1;min-height:0;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.hLogo{align-self:flex-start;margin-top:2vh;max-width:36%}
+.hLogo{align-self:flex-start;margin-top:calc(var(--vh,1vh)*2);max-width:36%}
 .hLogo h1{margin:0;font:italic 900 clamp(30px,5vw,56px)/.95 Impact,"Arial Black",system-ui,sans-serif;letter-spacing:1px;color:#fff;
   text-shadow:0 4px 0 #1d3440,0 7px 0 rgba(0,0,0,.5),0 0 26px rgba(80,170,255,.45)}
 .hLogo h1 b{display:block;color:var(--gold);font-weight:900;text-shadow:0 4px 0 #7a4a00,0 7px 0 rgba(0,0,0,.5),0 0 26px rgba(255,190,60,.6)}
@@ -124,7 +124,7 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
   #sHome{overflow-y:auto}
   .hTop{flex-wrap:wrap}.hProf{max-width:none;flex:1}.hChips{order:3;width:100%}
   .hMain{flex-direction:column;align-items:stretch;justify-content:flex-end}
-  .hLogo{max-width:none;margin-top:2vh}.hMenu{width:100%}
+  .hLogo{max-width:none;margin-top:calc(var(--vh,1vh)*2)}.hMenu{width:100%}
   .hBottom{position:relative!important;left:auto;bottom:auto;max-width:none;margin-top:8px}
   .homeShade{background:linear-gradient(180deg,rgba(6,10,13,.6) 0%,rgba(6,10,13,0) 30%,rgba(6,10,13,.2) 50%,rgba(6,10,13,.9) 100%)}
 }
@@ -335,7 +335,7 @@ body.pcMode .lookZone{cursor:crosshair}
 /* online */
 .olHead{display:flex;align-items:center;gap:4px;font-weight:800;font-size:14px;margin:-2px 0 8px;justify-content:center}
 .olHead b{color:var(--ok)}
-.olList{max-height:30vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;text-align:left}
+.olList{max-height:calc(var(--vh,1vh)*30);overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;text-align:left}
 .olRow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
 .olRow .av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:900;color:#fff;flex:none;position:relative}
 .olRow .av::after{content:'';position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--ok);border:2px solid var(--bg2)}
@@ -360,12 +360,13 @@ body.pcMode .lookZone{cursor:crosshair}
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(3,6,8,.74);display:none;align-items:center;justify-content:center;z-index:50;padding:12px;backdrop-filter:blur(3px)}
 .modal.on{display:flex}
-.sheet{width:100%;max-width:420px;max-height:96vh;overflow-y:auto;background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:18px;text-align:center;animation:mi .2s ease-out}
+.sheet{position:relative;width:100%;max-width:420px;max-height:calc(var(--vh,1vh)*96);overflow-y:auto;background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:18px;text-align:center;animation:mi .2s ease-out}
 .sheet.wide{max-width:700px}
 @keyframes mi{from{transform:translateY(20px) scale(.95);opacity:0}}
 .sheet h2{margin:4px 0 6px;font-size:21px}
 .sheet p{color:var(--mut);margin:0 0 12px;font-size:14px;line-height:1.5}
 .big{font-size:48px;line-height:1.1}
+.xBtn{position:absolute;right:10px;top:10px;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid var(--line);font-size:18px;font-weight:900;z-index:2}
 .stack{display:flex;flex-direction:column;gap:8px}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(30px);background:#000d;color:#fff;padding:11px 18px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:120;max-width:90%;text-align:center;pointer-events:none}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -536,7 +537,7 @@ body.pcMode .lookZone{cursor:crosshair}
 </div>
 
 <!-- MODALS -->
-<div class="modal" id="mBot"><div class="sheet wide">
+<div class="modal" id="mBot"><div class="sheet wide"><button class="xBtn" onclick="closeM('mBot')" aria-label="Tutup">✕</button>
   <h2>🎯 <span data-t="vsBot">Misi Bot</span></h2>
   <div class="mapGrid" id="mapGrid"></div>
   <div class="mapInfo" id="mapInfo"></div>
@@ -547,7 +548,7 @@ body.pcMode .lookZone{cursor:crosshair}
   </div>
 </div></div>
 
-<div class="modal" id="mOnline"><div class="sheet wide">
+<div class="modal" id="mOnline"><div class="sheet wide"><button class="xBtn" onclick="closeOnline()" aria-label="Tutup">✕</button>
   <h2>🌐 <span data-t="online">Lawan Online</span></h2>
   <p class="hideShort" data-t="onlineP"></p>
   <div class="olGrid">
@@ -558,15 +559,14 @@ body.pcMode .lookZone{cursor:crosshair}
     <div class="stack">
       <div class="optRow" style="margin-top:0"><span data-t="modeT">Mod</span><div class="seg" id="omSeg"><button data-m="1" onclick="setOMode(1)">1v1</button><button data-m="2" onclick="setOMode(2)">2v2</button><button data-m="3" onclick="setOMode(3)">3v3</button></div></div>
       <div class="optRow" style="margin-top:0"><span data-t="botFill">Kawan bot</span><div class="tog" id="tBotFill" onclick="toggleBotFill()"></div><small id="botFillTxt" style="flex:1;text-align:left"></small></div>
-      <button class="btn gold" onclick="closeOnline();findMatch()"><span class="ico">🎲</span><span class="grow"><span data-t="quick">Cari Lawan</span><span class="sub" id="myTierSub"></span></span></button>
-      <button class="btn pri" onclick="closeOnline();createRoom()"><span class="ico">🔑</span><span data-t="mkroom">Buat Bilik (Kawan)</span></button>
+      <button class="btn gold" onclick="closeOnline();createRoom()"><span class="ico">🔑</span><span data-t="mkroom">Buat Bilik (Kawan)</span></button>
       <button class="btn" onclick="closeOnline();joinRoomAsk()"><span class="ico">🚪</span><span data-t="joinroom">Masuk Bilik Guna Kod</span></button>
       <button class="btn center" onclick="closeOnline()" data-t="cancel">Batal</button>
     </div>
   </div>
 </div></div>
 
-<div class="modal" id="mLobby"><div class="sheet wide">
+<div class="modal" id="mLobby"><div class="sheet wide"><button class="xBtn" onclick="cancelWait()" aria-label="Tutup">✕</button>
   <h2 id="lbTitle">🔑 Bilik</h2>
   <div class="code" id="lbCode"></div>
   <p id="lbSub" style="margin-bottom:4px"></p>
@@ -579,7 +579,7 @@ body.pcMode .lookZone{cursor:crosshair}
   </div>
 </div></div>
 
-<div class="modal" id="mWait"><div class="sheet">
+<div class="modal" id="mWait"><div class="sheet"><button class="xBtn" onclick="cancelWait()" aria-label="Tutup">✕</button>
   <div class="spinner"></div>
   <h2 id="wTitle">Mencari…</h2>
   <div class="code" id="wCode" style="display:none"></div>
@@ -677,7 +677,7 @@ const firebaseConfig = {
 /* 2) Link GitHub Pages app ini (untuk iPhone & kongsi) */
 const SHARE_LINK='https://alemmaxx.github.io/ProStrike/';
 /* 3) PENTING: naikkan nombor ini setiap kali index.html dikemas kini di GitHub */
-const APP_VERSION='1.2.0';
+const APP_VERSION='1.2.3';
 
 /* ============================================================
    ASAS
@@ -1609,7 +1609,7 @@ function getCam(){const me=ME_E();let v=me,free=false;
 /* ---------- Bingkai ---------- */
 let fovCur=0;
 function resizeGL(){const cv=GL.cv;const q=[.62,.85,1][S.gfx==null?1:S.gfx];const dpr=Math.min(2,window.devicePixelRatio||1)*q*UIZ;
-  const w=Math.max(2,Math.round(cv.clientWidth*dpr)),h=Math.max(2,Math.round(cv.clientHeight*dpr));if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
+  let w=Math.max(2,Math.round(cv.clientWidth*dpr)),h=Math.max(2,Math.round(cv.clientHeight*dpr));const mx=Math.sqrt(2.1e6/(w*h));if(mx<1){w=Math.round(w*mx);h=Math.round(h*mx);}if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
   const hc=$('hud2'),d2=Math.min(2,window.devicePixelRatio||1)*UIZ,w2=Math.round(hc.clientWidth*d2),h2=Math.round(hc.clientHeight*d2);if(hc.width!==w2||hc.height!==h2){hc.width=w2;hc.height=h2;}}
 function renderGame(dt){if(!GL.ok)return;const gl=GL.gl,th=MAP.th;resizeGL();const cv=GL.cv,W=cv.width,H=cv.height,asp=W/H;
   const cam=getCam();const hf=90*D2R;const baseFy=2*Math.atan(Math.tan(hf/2)/asp);const fy=2*Math.atan(Math.tan(baseFy/2)/cam.zoom);
@@ -1741,7 +1741,7 @@ addEventListener('keydown',e=>{if(KB_CAP){e.preventDefault();e.stopPropagation()
     else if(!me)continue;else if(a==='reload')startReload(me);else if(a==='aim'){if(me.alive)toggleAim(me);}else if(a==='s1'||a==='s2'||a==='s3'){if(me.alive)switchTo(me,+a[1]);}
     else if(a==='nade')nadeBtn(me,'he');else if(a==='smoke')nadeBtn(me,'sm');else if(a==='buy')($('buy').classList.contains('on')?closeBuy():openBuy());else if(a==='board')toggleBoard(true);}});
 addEventListener('keyup',e=>{for(const a of actOf(e.code)){IN.act[a]=false;if(a==='board')toggleBoard(false);if(a==='crouch')IN.crouch=false;if(a==='fire'){IN.keyFire=false;IN.fire=IN.firePtr.size>0||!!IN.mouseFire;}}});
-addEventListener('blur',()=>{IN.act={};IN.keyFire=false;IN.mouseFire=false;IN.fire=IN.firePtr.size>0;});
+addEventListener('blur',()=>{try{if(document.pointerLockElement)document.exitPointerLock();}catch(e){}IN.act={};IN.keyFire=false;IN.mouseFire=false;IN.fire=IN.firePtr.size>0;});
 document.addEventListener('pointerlockchange',()=>{if(!document.pointerLockElement&&G.on&&G.mode!=='online'&&curScreen()==='sGame'&&S.pc&&!$('buy').classList.contains('on')&&!$('board').classList.contains('on')&&G.R.ph!=='over')pauseGame();});
 
 function ctrlPlayer(me,dt){
@@ -1817,7 +1817,10 @@ function startLoop(){if(loopOn)return;loopOn=true;lastT=0;requestAnimationFrame(
 function stopLoop(){loopOn=false;}
 function loop(ts){if(!loopOn)return;requestAnimationFrame(loop);const dt=lastT?Math.min(.05,(ts-lastT)/1000):.016;lastT=ts;
   if(!G.on){return;}
-  try{if(!G.paused)update(dt*G.speed);if(curScreen()==='sGame'){renderGame(dt);drawHUD(dt);hudDOM();}}catch(e){console.error(e);}}
+  // bila tetingkap tidak aktif (alt-tab / klik di luar): rehat & berhenti melukis supaya komputer tak berat
+  const act=!document.hidden&&(IS_TOUCH&&!S.pc||document.hasFocus());
+  if(!act&&G.mode!=='online'&&!G.paused&&curScreen()==='sGame'&&G.R.ph!=='over'){pauseGame();}
+  try{if(!G.paused)update(dt*G.speed);if(curScreen()==='sGame'&&act&&(!G.paused||!G.pausedDrawn)){G.pausedDrawn=G.paused;renderGame(dt);drawHUD(dt);hudDOM();}if(!G.paused)G.pausedDrawn=false;}catch(e){console.error(e);}}
 function update(dt){G.time+=dt;const me=ME_E();
   if(me&&me.alive)ctrlPlayer(me,dt);else if(me)tickWeapon(me,dt);
   for(const e of G.E){if(e!==me){if(e.bot&&isAuth())botTick(e,dt);else if(G.net)netEnt(e,dt);if(isAuth()||e.bot)tickWeapon(e,dt);}
@@ -1871,7 +1874,7 @@ let bigT=null;function showBig(a,b){const e=$('bigMsg');e.innerHTML=esc(a)+(b?`<
 const T={
 ms:{uizT:'Saiz paparan (ikon & butang)',uizS:'Auto = paling besar yang muat skrin',pcMode:'Main guna PC / laptop',pcModeS:'Papan kekunci + tetikus. Butang skrin sentuh disembunyikan',msens:'Kepekaan tetikus',kpT:'Susunan kekunci',kpW:'⌨️ WASD',kpA:'⬆️ Anak Panah',kpN:'🔢 Nombor',kpDone:'Susunan kekunci ditukar',kpHint:'Tekan butang kekunci, kemudian tekan kekunci baru (Backspace = kosong, Esc = batal)',pressKey:'Tekan kekunci…',
  kFwd:'Maju',kBack:'Undur',kLeft:'Kiri',kRight:'Kanan',kJump:'Lompat',kCrouch:'Tunduk (tahan)',kFire:'Tembak (kekunci)',kAim:'Skop / zum',kReload:'Isi peluru',kS1:'Senjata utama',kS2:'Pistol',kS3:'Pisau',kNade:'Bom tangan',kSmoke:'Bom asap',
- kLookL:'Pandang kiri',kLookR:'Pandang kanan',kLookU:'Pandang atas',kLookD:'Pandang bawah',kBuy:'Menu senjata',kBoard:'Papan skor (tahan)',kMouse:'Tetikus',kMouseD:'gerak = pandang · kiri = tembak · kanan = skop',kPause:'Rehat',kReset:'Set semula',touchT:'Kawalan skrin sentuh',vsBot:'Misi Bot',vsBotSub:'10 kawasan · lawan pasukan bot',online:'Lawan Online',onlineSub:'1v1 · 2v2 · 3v3 dengan kawan bot',onlineP:'Main dengan pemain sebenar. Kalau 1 lawan 1, setiap pasukan dilengkapkan dengan kawan bot. Menang untuk naik rating!',
+ kLookL:'Pandang kiri',kLookR:'Pandang kanan',kLookU:'Pandang atas',kLookD:'Pandang bawah',kBuy:'Menu senjata',kBoard:'Papan skor (tahan)',kMouse:'Tetikus',kMouseD:'gerak = pandang · kiri = tembak · kanan = skop',kPause:'Rehat',kReset:'Set semula',touchT:'Kawalan skrin sentuh',vsBot:'Misi Bot',vsBotSub:'10 kawasan · lawan pasukan bot',online:'Lawan Online',onlineSub:'1v1 · 2v2 · 3v3 dengan kawan bot',onlineP:'Ajak pemain online dari senarai, atau buat bilik & kongsi kod. Kalau 1 lawan 1, setiap pasukan dilengkapkan dengan kawan bot. Menang untuk naik rating!',
  train:'Latihan',rank:'Ranking',set:'Tetapan',back:'Kembali',cancel:'Batal',play:'Main',next:'Seterusnya',
  exitBtn:'Keluar App',exitApp:'Keluar ProStrike?',exitSub:'Jumpa lagi, askar! Teruskan berlatih.',rotTitle:'Pusingkan telefon anda',rotSub:'ProStrike dimain dalam mod melintang (landscape)',
  player:'Pemain',weapons:'SENJATA',buyTitle:'Pilih Senjata (semua percuma!)',random:'Rawak',done:'Siap ✓',killsT:'Bunuh',
@@ -1888,7 +1891,7 @@ ms:{uizT:'Saiz paparan (ikon & butang)',uizS:'Auto = paling besar yang muat skri
  codeSub:'Minta kod 5 huruf daripada kawan anda',join:'Masuk',badCode:'Kod bilik tidak dijumpai',roomFull:'Bilik sudah penuh',
  home:'Menu Utama',nextLvl:'Level Seterusnya ▶',again:'Main Lagi',paused:'Rehat',resumeG:'Sambung',restart:'Mula Semula',yes:'Ya',no:'Tidak',
  updTitle:'Versi baru tersedia!',updSub:'Versi {v} sudah ada. Tekan Kemas Kini — app akan dimuat semula. Semua data & ranking kekal selamat.',updBar:'Versi baru {v} tersedia',updLatest:'Anda guna versi terkini ✓',updFail:'Tak dapat semak kemas kini',updDl:'Mengemas kini…',updDone:'Versi baru dipasang',later:'Nanti',
- invTitle:'Ajakan Bertempur!',invSub:'{n} (⭐{r}) ajak anda main {m}.',accept:'Terima',decline:'Tolak',invite:'Ajak',busy:'Sedang main',noOnline:'Tiada pemain lain online sekarang. Cuba Cari Lawan atau Buat Bilik.',
+ invTitle:'Ajakan Bertempur!',invSub:'{n} (⭐{r}) ajak anda main {m}.',accept:'Terima',decline:'Tolak',invite:'Ajak',busy:'Sedang main',noOnline:'Tiada pemain lain online sekarang. Buat Bilik & kongsi kod dengan kawan.',
  invWait:'Menunggu {n} terima…',invWaitSub:'Ajakan tamat dalam 30 saat',invDeclined:'{n} menolak ajakan',invExpired:'Tiada jawapan daripada {n}',invGone:'Ajakan sudah tamat',
  bAim:'SKOP',bJump:'LOMPAT',bCrouch:'TUNDUK',bReload:'ISI',
  round:'PUSINGAN',go:'SERANG!',drawRound:'PUSINGAN SERI',winsRound:'MENANG PUSINGAN',timeUp:'Masa tamat',elim:'Semua musuh tumpas',noNade:'Bom sudah habis',watching:'Menonton',youDied:'💀 Anda tumpas — tunggu pusingan seterusnya',
@@ -1898,10 +1901,10 @@ ms:{uizT:'Saiz paparan (ikon & butang)',uizS:'Auto = paling besar yang muat skri
  connecting:'Menyambung…',hostLeft:'Hos perlawanan telah keluar',leave:'Keluar perlawanan?',leaveOn:'Anda akan dikira kalah.',leaveMenu:'Kembali ke menu?',oppLeft:'{n} keluar — bot ambil alih',youLeft:'Anda tinggalkan perlawanan',
  noNet:'firebaseConfig belum ditampal dalam index.html.',noSdk:'Gagal sambung ke Firebase. Semak internet & cuba lagi.',noAuth:'Gagal log masuk Firebase. Pastikan Anonymous sign-in di-enable.',offline:'Tiada sambungan internet',online1:'Online',
  rulesOld:'Ranking tak dapat disimpan — Publish fail firestore.rules di Firebase',syncErr:'Profil anda belum masuk ranking. Semak internet / Firestore Rules',newSeason:'Ranking musim baru bermula!',tier:'Pangkat',you:'ANDA',rematchW:'{n} ajak main lagi!',waitRematch:'Menunggu pemain lain…',
- trainTip:'Tembak sasaran 🎯. Tekan SENJATA untuk cuba semua senapang.',clickTip:'Klik skrin untuk kawal dengan tetikus'},
+ trainTip:'Tembak sasaran 🎯. Tekan SENJATA untuk cuba semua senapang.',clickTip:'🖱️ Klik skrin untuk kawal · Esc = lepaskan tetikus'},
 en:{uizT:'Display size (icons & buttons)',uizS:'Auto = largest that fits the screen',pcMode:'Play with PC / laptop',pcModeS:'Keyboard + mouse. Touch buttons are hidden',msens:'Mouse sensitivity',kpT:'Key layout',kpW:'⌨️ WASD',kpA:'⬆️ Arrows',kpN:'🔢 Numbers',kpDone:'Key layout changed',kpHint:'Tap a key button, then press the new key (Backspace = clear, Esc = cancel)',pressKey:'Press a key…',
  kFwd:'Forward',kBack:'Back',kLeft:'Left',kRight:'Right',kJump:'Jump',kCrouch:'Crouch (hold)',kFire:'Fire (key)',kAim:'Scope / zoom',kReload:'Reload',kS1:'Main weapon',kS2:'Pistol',kS3:'Knife',kNade:'Grenade',kSmoke:'Smoke',
- kLookL:'Look left',kLookR:'Look right',kLookU:'Look up',kLookD:'Look down',kBuy:'Weapon menu',kBoard:'Scoreboard (hold)',kMouse:'Mouse',kMouseD:'move = look · left = fire · right = scope',kPause:'Pause',kReset:'Reset',touchT:'Touch controls',vsBot:'Bot Missions',vsBotSub:'10 areas · fight bot squads',online:'Play Online',onlineSub:'1v1 · 2v2 · 3v3 with bot teammates',onlineP:'Play real players. In 1v1 each team is filled with bot teammates. Win to raise your rating!',
+ kLookL:'Look left',kLookR:'Look right',kLookU:'Look up',kLookD:'Look down',kBuy:'Weapon menu',kBoard:'Scoreboard (hold)',kMouse:'Mouse',kMouseD:'move = look · left = fire · right = scope',kPause:'Pause',kReset:'Reset',touchT:'Touch controls',vsBot:'Bot Missions',vsBotSub:'10 areas · fight bot squads',online:'Play Online',onlineSub:'1v1 · 2v2 · 3v3 with bot teammates',onlineP:'Invite an online player from the list, or create a room & share the code. In 1v1 each team is filled with bot teammates. Win to raise your rating!',
  train:'Training',rank:'Ranking',set:'Settings',back:'Back',cancel:'Cancel',play:'Play',next:'Next',
  exitBtn:'Exit App',exitApp:'Exit ProStrike?',exitSub:'See you again, soldier! Keep training.',rotTitle:'Rotate your phone',rotSub:'ProStrike is played in landscape mode',
  player:'Player',weapons:'WEAPONS',buyTitle:'Choose Weapons (all free!)',random:'Random',done:'Done ✓',killsT:'Kills',
@@ -1918,7 +1921,7 @@ en:{uizT:'Display size (icons & buttons)',uizS:'Auto = largest that fits the scr
  codeSub:'Ask your friend for the 5-letter code',join:'Join',badCode:'Room code not found',roomFull:'Room is full',
  home:'Main Menu',nextLvl:'Next Level ▶',again:'Play Again',paused:'Paused',resumeG:'Resume',restart:'Restart',yes:'Yes',no:'No',
  updTitle:'New version available!',updSub:'Version {v} is available. Tap Update — the app reloads. All your data & ranking stay safe.',updBar:'New version {v} available',updLatest:'You are on the latest version ✓',updFail:'Could not check for updates',updDl:'Updating…',updDone:'New version installed',later:'Later',
- invTitle:'Battle Invite!',invSub:'{n} (⭐{r}) invites you to play {m}.',accept:'Accept',decline:'Decline',invite:'Invite',busy:'In a match',noOnline:'No other players online right now. Try Find Match or Create Room.',
+ invTitle:'Battle Invite!',invSub:'{n} (⭐{r}) invites you to play {m}.',accept:'Accept',decline:'Decline',invite:'Invite',busy:'In a match',noOnline:'No other players online right now. Create a Room & share the code with friends.',
  invWait:'Waiting for {n} to accept…',invWaitSub:'Invite expires in 30 seconds',invDeclined:'{n} declined your invite',invExpired:'No response from {n}',invGone:'Invite has expired',
  bAim:'SCOPE',bJump:'JUMP',bCrouch:'CROUCH',bReload:'RELOAD',
  round:'ROUND',go:'GO GO GO!',drawRound:'ROUND DRAW',winsRound:'WIN THE ROUND',timeUp:'Time is up',elim:'All enemies eliminated',noNade:'No grenades left',watching:'Watching',youDied:'💀 You are down — wait for the next round',
@@ -1928,7 +1931,7 @@ en:{uizT:'Display size (icons & buttons)',uizS:'Auto = largest that fits the scr
  connecting:'Connecting…',hostLeft:'The match host has left',leave:'Leave the match?',leaveOn:'This counts as a loss.',leaveMenu:'Back to the menu?',oppLeft:'{n} left — a bot takes over',youLeft:'You left the match',
  noNet:'firebaseConfig not pasted into index.html.',noSdk:'Cannot reach Firebase. Check internet & retry.',noAuth:'Firebase sign-in failed. Enable Anonymous sign-in.',offline:'No internet connection',online1:'Online',
  rulesOld:'Ranking cannot be saved — publish firestore.rules in Firebase',syncErr:'Your profile is not in the ranking yet. Check internet / Firestore Rules',newSeason:'New ranking season started!',tier:'Rank',you:'YOU',rematchW:'{n} wants a rematch!',waitRematch:'Waiting for other players…',
- trainTip:'Shoot the targets 🎯. Tap WEAPONS to try every gun.',clickTip:'Click the screen to control with the mouse'}
+ trainTip:'Shoot the targets 🎯. Tap WEAPONS to try every gun.',clickTip:'🖱️ Click the screen to control · Esc = release the mouse'}
 };
 const TIERS=[[0,'🥉','Gangsa','Bronze'],[1100,'🥈','Perak','Silver'],[1250,'🥇','Emas','Gold'],[1400,'💠','Platinum','Platinum'],[1600,'💎','Berlian','Diamond'],[1800,'👑','Legenda','Legend']];
 function tierOf(r){let x=TIERS[0];for(const tr of TIERS)if(r>=tr[0])x=tr;return x;}
@@ -1959,7 +1962,7 @@ function setSens(v){S.sens=+v;LS.set('settings',S);$('sensV').textContent='x'+(+
 function setGfx(q){S.gfx=q;LS.set('settings',S);refreshSet();}
 // Skala paparan: dalam mod PC semua ikon/butang dibesarkan ikut saiz skrin (sehingga maksimum yang muat)
 function calcUIZ(){if(!S.pc&&IS_TOUCH)return 1;const auto=clamp(Math.min(innerWidth/860,innerHeight/430),1,3);return S.uiz==='auto'||S.uiz==null?auto:clamp(+S.uiz,1,auto);}
-function applyZoom(){const z=calcUIZ();if(Math.abs(z-UIZ)<.005&&document.documentElement.style.zoom)return;UIZ=z;document.documentElement.style.zoom=z>1.001?z:'';
+function applyZoom(){const z=calcUIZ();document.documentElement.style.setProperty('--vh',(innerHeight/Math.max(1,z)/100)+'px');if(Math.abs(z-UIZ)<.005&&document.documentElement.style.zoom)return;UIZ=z;document.documentElement.style.zoom=z>1.001?z:'';
   if($('uizV'))$('uizV').textContent=(S.uiz==='auto'||S.uiz==null?'Auto ':'')+'x'+z.toFixed(2);checkRot();}
 addEventListener('resize',()=>applyZoom());
 function setUIZ(v){S.uiz=v;LS.set('settings',S);applyZoom();refreshSet();}
@@ -2022,8 +2025,10 @@ function homeScene(){if(HOME||!GL.ok)return;const i=Math.floor(Math.random()*MAP
     const e=mkEnt(k,tm,'',{load:botLoad(6)});refill(e);e.x=x;e.z=z;e.yaw=yaw;e.cr=k===2?1:0;e.pitch=-.05;HOME.sol.push(e);});
   MAP=saved;}
 function startHome(){glTo('home');if(!GL.ok)return;homeScene();if(homeOn)return;homeOn=true;requestAnimationFrame(homeLoop);}
-function homeLoop(ts){if(curScreen()!=='sHome'||G.on){homeOn=false;return;}requestAnimationFrame(homeLoop);if(document.hidden||thumbBusy)return;
-  homeT+=.016;const M=HOME.M,th=M.th,gl=GL.gl,cv=GL.cv;const q=Math.min(1.5,window.devicePixelRatio||1)*.8*UIZ;const w=Math.round(cv.clientWidth*q),h=Math.round(cv.clientHeight*q);if(!w||!h)return;
+let homeLast=0;
+function homeLoop(ts){if(curScreen()!=='sHome'||G.on){homeOn=false;return;}requestAnimationFrame(homeLoop);if(document.hidden||thumbBusy||(!IS_TOUCH&&!document.hasFocus()))return;
+  if(ts-homeLast<33)return;homeLast=ts; // latar menu: 30fps sahaja
+  homeT+=.033;const M=HOME.M,th=M.th,gl=GL.gl,cv=GL.cv;const q=Math.min(1.25,window.devicePixelRatio||1)*.7*UIZ;let w=Math.round(cv.clientWidth*q),h=Math.round(cv.clientHeight*q);if(!w||!h)return;const mx=Math.min(1,1400/w);w=Math.round(w*mx);h=Math.round(h*mx);
   if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
   const cx=M.W*CS/2,cz=M.H*CS/2,a=homeT*.06,R=14;const eye=[cx+Math.cos(a)*R,5.5+Math.sin(homeT*.2)*.8,cz+Math.sin(a)*R];
   const yaw=Math.atan2(cx-eye[0],-(cz-eye[2])),pitch=-.2;const B=camBasis(yaw,pitch);const asp=w/h,fy=2*Math.atan(Math.tan(40*D2R)/Math.max(asp,1)*1.1);
@@ -2060,7 +2065,7 @@ let LASTGAME=null;
 function startMatch(o){LASTGAME=o;stopHome();IN.mx=IN.mz=0;IN.fire=false;IN.crouch=false;IN.firePtr.clear();for(const k in HC)delete HC[k];$('feed').innerHTML='';$('pCrouch').classList.remove('on');
   newGame(o);show('sGame');glTo('game');G.speed=1;startLoop();beat();
   if(o.mode==='train')setTimeout(()=>toast(t('trainTip')),600);else if(S.pc)setTimeout(()=>toast(t('clickTip')),900);
-  if(S.pc)reqLock();}
+}
 function stopHome(){homeOn=false;}
 function onRoundStartUI(){if(!G.on)return;const m=G.mode==='train'?TRAIN_MAP:MAPS[G.mapIdx];
   if(G.mode!=='train')showBig(t('round')+' '+G.R.n,m.n[S.lang]+' · '+G.R.sc[0]+' : '+G.R.sc[1]);
@@ -2094,7 +2099,7 @@ function exitGame(){closeM('mEnd');closeM('mPause');closeBuy();toggleBoard(false
 /* ============ Menu senjata (beli) ============ */
 let buyCat='rifle';
 function openBuy(){if(!G.on||!canBuy())return;const me=ME_E();const w=wOf(me);buyCat=w.cat==='knife'?'rifle':w.cat;renderBuy();$('buy').classList.add('on');try{document.exitPointerLock();}catch(e){}}
-function closeBuy(){$('buy').classList.remove('on');if(G.on&&S.pc&&curScreen()==='sGame'&&!document.querySelector('.modal.on'))reqLock();}
+function closeBuy(){$('buy').classList.remove('on');}
 function renderBuy(){const me=ME_E();$('buyTabs').innerHTML=CATS.map(([k,n])=>`<button class="${k===buyCat?'on':''}" onclick="buyCat='${k}';renderBuy()">${n}</button>`).join('');
   const L=WPN.filter(w=>w.cat===buyCat);const mx={dmg:120,rate:1,acc:1,spd:5.5};
   $('buyList').innerHTML=L.map(w=>{const on=me&&(me.load.pri===w.id||me.load.sec===w.id);const dps=Math.min(1,(w.dmg*(w.pel||1))/Math.max(w.rate,.06)/600);
@@ -2153,7 +2158,7 @@ function myInfo(){return{name:ME.name,rating:Math.round(ME.rating),lvl:lvlOf(ME.
 const modeTxt=m=>m+'v'+m;
 
 /* ---------- Menu online ---------- */
-function openOnline(){if(!needOnline())return;$('myTierSub').textContent=tierTxt(ME.rating)+' · ⭐'+ME.rating;renderOMode();openM('mOnline');watchOnline(true);}
+function openOnline(){if(!needOnline())return;renderOMode();openM('mOnline');watchOnline(true);}
 function closeOnline(){watchOnline(false);closeM('mOnline');}
 function setOMode(m){OM_MODE=m;OM_BOTS=m===1;LS.set('omode',m);LS.set('obots',OM_BOTS);renderOMode();}
 function toggleBotFill(){OM_BOTS=!OM_BOTS;LS.set('obots',OM_BOTS);renderOMode();}
@@ -2184,7 +2189,7 @@ async function joinRoom(){const code=$('codeInp').value.trim().toUpperCase();if(
   try{const q=await db.collection(C.matches).where('code','==',code).where('status','==','room').limit(1).get();if(q.empty)return toast(t('badCode'));
     const d=q.docs[0];const x=d.data();if((x.uids||[]).length>=2*x.mode&&!(x.uids||[]).includes(ME.fid))return toast(t('roomFull'));
     const ok=await joinTx(d.ref,'room');if(!ok)return toast(t('badCode'));closeM('mJoin');enterMatch(d.id,false);}catch(e){toast('⚠️ '+(e.code||e.message||e));}}
-async function cancelWait(){closeM('mWait');closeM('mLobby');clearTimeout(waitTimer);
+async function cancelWait(){closeM('mWait');closeM('mLobby');closeM('mJoin');clearTimeout(waitTimer);clearTimeout(OM.autoT);
   if(invOut){const iv=invOut;invOut=null;clearInterval(invOutT);iv.update({status:'cancelled'}).catch(()=>{});}
   const ref=matchRef;stopMatch();if(!ref)return;
   try{await db.runTransaction(async tx=>{const s=await tx.get(ref);if(!s.exists)return;const x=s.data();if(x.status==='playing'||x.status==='done')return;
@@ -2216,7 +2221,7 @@ function renderLobby(d){if(!$('mLobby').classList.contains('on'))openM('mLobby')
   $('lbTitle').textContent='🔑 '+(S.lang==='ms'?'Bilik':'Room')+' '+modeTxt(d.mode)+(d.bots?' + 🤖':'');$('lbCode').textContent=d.code||'';
   $('lbSub').textContent=t('roomMade')+' · '+t('waitPlayers').replace('{a}',n).replace('{b}',cap);
   const col=tm=>{const L=Object.entries(d.ps||{}).filter(([u,p])=>p.team===tm);let h=L.map(([u,p])=>`<div class="lp"><div class="av" style="background:${avColor(p.name)}">${esc((p.name||'?')[0])}</div>${esc(p.name)}${u===d.host?' 👑':''}${u===ME.fid?' ('+t('you')+')':''}</div>`).join('');
-    const fill=(d.bots?5:d.mode)-L.length;for(let i=0;i<fill;i++)h+=`<div class="lp bot">${d.bots||i<d.mode-L.length?'🤖 Bot':'…'}</div>`;return h;};
+    const fill=(d.bots?5:d.mode)-L.length;if(fill>0)h+=`<div class="lp bot">🤖 Bot × ${fill}</div>`;return h;};
   $('lbA').innerHTML=col(0);$('lbB').innerHTML=col(1);$('lbMap').textContent=(d.map+1)+'. '+MAPS[d.map].n[S.lang];
   ['lbMapPrev','lbMapNext'].forEach(i=>$(i).style.display=host?'':'none');$('lbStart').style.display=host?'flex':'none';$('lbStart').disabled=n<2;}
 function lobbyMap(dir){if(!OM.d||!OM.host)return;const m=(OM.d.map+dir+MAPS.length)%MAPS.length;matchRef.update({map:m}).catch(()=>{});}
@@ -2368,13 +2373,15 @@ function renderOnline(){const now=Date.now(),seen=new Set();
     .sort((a,b)=>(a.status==='playing')-(b.status==='playing')||Math.abs((a.rating||1000)-ME.rating)-Math.abs((b.rating||1000)-ME.rating));
   $('olN').textContent=rows.length;const e=$('onCnt');e.textContent='🟢 '+rows.length;e.classList.toggle('on',rows.length>0);
   $('olList').innerHTML=rows.length?rows.map(r=>{const busy=r.status==='playing';return `<div class="olRow${busy?' busy':''}"><div class="av" style="background:${avColor(r.name)}">${esc(r.name[0].toUpperCase())}</div><div class="nm">${esc(r.name)}<small>${tierOf(r.rating||1000)[1]} ⭐${r.rating||1000} · Lv ${r.lvl||1}</small></div><button ${busy?'disabled':''} onclick="sendInvite('${r.id}')">${busy?t('busy'):'⚔️ '+t('invite')}</button></div>`;}).join(''):`<div class="olEmpty">${t('noOnline')}</div>`;}
+// ajakan ditolak/tamat: jika bilik hanya ada saya, tutup bilik & kembali ke menu online
+async function inviteFailed(){if(!OM.d||(OM.d.uids||[]).length>1||G.on)return;await cancelWait();setTimeout(()=>{if(!G.on&&curScreen()==='sHome')openOnline();},300);}
 async function sendInvite(uid){const r=olRows.find(x=>x.id===uid);if(!r||!needOnline())return;watchOnline(false);closeM('mOnline');
   try{if(!matchRef){const code=Array.from({length:5},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)]).join('');const ref=db.collection(C.matches).doc();await ref.set(newMatch({status:'room',code}));enterMatch(ref.id,true);}
     const iref=db.collection(C.invites).doc();invOut=iref;
     await iref.set({from:{uid:ME.fid,name:ME.name,rating:ME.rating},to:r.id,toName:r.name,matchId:matchRef.id,mode:OM_MODE,status:'pending',ts:Date.now()});toast('📨 '+t('invWait').replace('{n}',r.name));
     const un=iref.onSnapshot(s=>{const x=s.data();if(!x||invOut!==iref)return un();
-      if(x.status==='declined'){un();invOut=null;toast('😔 '+t('invDeclined').replace('{n}',r.name));}else if(x.status==='accepted'){un();invOut=null;clearInterval(invOutT);}});
-    let left=30;clearInterval(invOutT);invOutT=setInterval(()=>{left--;if(left<=0){clearInterval(invOutT);if(invOut===iref){un();invOut=null;toast('⌛ '+t('invExpired').replace('{n}',r.name));iref.update({status:'cancelled'}).catch(()=>{});}}},1000);
+      if(x.status==='declined'){un();invOut=null;clearInterval(invOutT);toast('😔 '+t('invDeclined').replace('{n}',r.name));inviteFailed();}else if(x.status==='accepted'){un();invOut=null;clearInterval(invOutT);}});
+    let left=30;clearInterval(invOutT);invOutT=setInterval(()=>{left--;if(left<=0){clearInterval(invOutT);if(invOut===iref){un();invOut=null;toast('⌛ '+t('invExpired').replace('{n}',r.name));inviteFailed();iref.update({status:'cancelled'}).catch(()=>{});}}},1000);
   }catch(e){toast('⚠️ '+(e.code||e.message));}}
 function listenInvites(){if(invUnsub||!db||!ME.fid)return;
   invUnsub=db.collection(C.invites).where('to','==',ME.fid).onSnapshot(q=>{q.docChanges().forEach(ch=>{const x=ch.doc.data();const fresh=Date.now()-(x.ts||0)<30000;
@@ -2459,6 +2466,9 @@ let lastBack=0;function backPressed(){const n=Date.now();if(n-lastBack<250)retur
 (function(){let native=false;try{const A=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.App;if(A&&IS_NATIVE){A.addListener('backButton',backPressed);native=true;}}catch(e){}
   document.addEventListener('backbutton',e=>{e.preventDefault();backPressed();},false);
   if(!native){try{history.pushState({ps:1},'');addEventListener('popstate',()=>{history.pushState({ps:1},'');backPressed();});}catch(e){}}})();
+
+// PC: Esc = butang kembali (di luar permainan)
+addEventListener('keydown',e=>{if(e.key!=='Escape'||KB_CAP)return;const m=document.querySelector('.modal.on');if(curScreen()==='sGame'&&!m)return;if(m&&['mName','mJoin','mAdmin'].includes(m.id)&&m.id!=='mJoin'&&m.id!=='mAdmin'&&!ME.name)return;e.preventDefault();backPressed();});
 
 /* ============ Kemas kini dalam app (tanpa download APK) ============ */
 let updInfo=null;
