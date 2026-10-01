@@ -1,0 +1,11 @@
+{
+  "appId": "com.prokuiz.strike",
+  "appName": "ProStrike",
+  "webDir": "www",
+  "server": {
+    "url": "https://alemmaxx.github.io/ProStrike/",
+    "allowNavigation": ["alemmaxx.github.io"],
+    "errorPath": "offline.html"
+  },
+  "android": { "backgroundColor": "#0b1014" }
+}

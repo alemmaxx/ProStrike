@@ -1,0 +1,17 @@
+{
+  "name": "ProStrike by ProKuiz",
+  "short_name": "ProStrike",
+  "description": "Game tembak pasukan 3D: 17 senjata, 10 kawasan, lawan bot & online 1v1 / 2v2 / 3v3",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0b1014",
+  "theme_color": "#0b1014",
+  "lang": "ms",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
