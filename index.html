@@ -201,7 +201,7 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 .hpBox.low .bar i{background:linear-gradient(90deg,#ff4d4d,#ff9a3d)}
 .hpBox.low{color:#ff8080}
 .ammoBox{padding:4px 10px;border-radius:12px;background:rgba(0,0,0,.55);font-weight:900;font-size:22px;text-align:center;line-height:1}
-.ammoBox small{display:block;font-size:10px;color:var(--mut);font-weight:800;letter-spacing:.5px;margin-top:2px}
+.ammoBox small{display:block;white-space:nowrap;font-size:10px;color:var(--mut);font-weight:800;letter-spacing:.5px;margin-top:2px}
 .ammoBox.empty{color:#ff6b6b}
 .slots{display:flex;gap:5px;pointer-events:auto}
 .slot{min-width:58px;height:44px;padding:2px 6px;border-radius:10px;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.18);font-size:10px;font-weight:900;color:#dbe4ea;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
@@ -450,7 +450,7 @@ body.pcMode .lookZone{cursor:crosshair}
       <button class="pad" id="pAim" data-b="aim"><div><span>🎯</span><em data-t="bAim">SKOP</em></div></button>
       <button class="pad" id="pJump" data-b="jump"><div><span>⤴️</span><em data-t="bJump">LOMPAT</em></div></button>
       <button class="pad" id="pCrouch" data-b="crouch"><div><span>⬇️</span><em data-t="bCrouch">TUNDUK</em></div></button>
-      <button class="pad" id="pReload" data-b="reload"><div><span>🔄</span><em data-t="bReload">ISI</em></div></button>
+      <button class="pad" id="pReload" data-b="reload" style="visibility:hidden"><div><span>🔄</span><em data-t="bReload">ISI</em></div></button>
       <button class="pad" id="pNade" data-b="nade"><div><span>💣</span><em id="nadeN">1</em></div></button>
       <button class="pad" id="pSmoke" data-b="smoke"><div><span>💨</span><em id="smokeN">1</em></div></button>
     </div>
@@ -500,6 +500,7 @@ body.pcMode .lookZone{cursor:crosshair}
       <div class="set"><span data-t="lang">Bahasa</span><div class="seg"><button data-l="ms" onclick="setLang('ms')">BM</button><button data-l="en" onclick="setLang('en')">EN</button></div></div>
       <div class="set"><span><span data-t="pcMode">Main guna PC</span><small data-t="pcModeS"></small></span><div class="tog" id="tPc" onclick="toggleSet('pc')"></div></div>
       <div id="pcBox">
+        <div class="set"><span><span data-t="uizT">Saiz paparan</span><small><span data-t="uizS"></span> · <b id="uizV"></b></small></span><div class="seg" id="uizSeg"><button data-z="1" onclick="setUIZ('1')">S</button><button data-z="1.4" onclick="setUIZ('1.4')">M</button><button data-z="1.8" onclick="setUIZ('1.8')">L</button><button data-z="auto" onclick="setUIZ('auto')">MAX</button></div></div>
         <div class="set"><span><span data-t="msens">Kepekaan tetikus</span><small id="msensV"></small></span><input type="range" id="rMSens" min="0.2" max="3" step="0.05" oninput="setMSens(this.value)"></div>
         <div class="set" style="flex-direction:column;align-items:stretch;gap:8px">
           <span data-t="kpT">Susunan kekunci</span>
@@ -676,7 +677,7 @@ const firebaseConfig = {
 /* 2) Link GitHub Pages app ini (untuk iPhone & kongsi) */
 const SHARE_LINK='https://alemmaxx.github.io/ProStrike/';
 /* 3) PENTING: naikkan nombor ini setiap kali index.html dikemas kini di GitHub */
-const APP_VERSION='1.1.0';
+const APP_VERSION='1.2.0';
 
 /* ============================================================
    ASAS
@@ -1251,6 +1252,7 @@ const TEAMS=[{n:'HARIMAU',ic:'🐯',col:'#ff8a3d',rgb:[1,.54,.24]},{n:'HELANG',i
 const UNI=[{shirt:'#8e6a42',pants:'#51452f',vest:'#5e4b30',head:'#b23a2e',glove:'#2b241c'},{shirt:'#2d4b72',pants:'#1f2d42',vest:'#33475c',head:'#1c2a3b',glove:'#16202b'}];
 const SKINS=['#c68857','#e3ad80','#9a6640','#d9a27a','#b5794a','#f0c8a0','#8a5a36'];
 const BOTNAMES=['Ali','Abu','Chong','Muthu','Siti','Aiman','Farid','Ravi','Mei Ling','Hafiz','Daniel','Zul','Kumar','Amir','Lina','Hakim','Wei Jie','Rosli','Nadia','Faiz','Arif','Jason','Salmah','Bala'];
+const INF_AMMO=true; // peluru tanpa had — tiada isi semula
 const FREEZE=4,ROUND_T=105,END_T=4.5,WIN_R=4,BUY_WIN=18,EYE=1.62,EYE_C=1.12,RAD=.32,GRAV=17,JUMPV=5.9,STEP=.35;
 const BOTLV=l=>{const k=clamp((l-1)/9,0,1);return{react:lerp(.95,.22,k),err:lerp(9,1.3,k)*D2R,turn:lerp(2.6,9.5,k),hs:lerp(.06,.5,k),spray:lerp(.25,.85,k),strafe:lerp(.05,.85,k),view:lerp(34,78,k),nade:lerp(0,.3,k),burst:lerp(.45,.22,k),lv:l};};
 
@@ -1334,7 +1336,7 @@ function switchTo(e,slot){let id=slot===1?e.load.pri:slot===2?e.load.sec:slot===
 function spreadOf(e){const w=wOf(e);let s=w.spr;if(w.cat==='sniper'&&!e.aimOn)s=w.uns||.08;
   s+=w.mv*clamp(e.spd/w.spd,0,1.2);if(!e.onG)s+=.09;if(e.cr>.5)s*=.72;if(e.aimOn&&!w.zoom&&w.cat!=='shotgun')s*=.7;
   if(w.cat!=='shotgun')s+=Math.min(e.recoil,9)*w.spr*.32;return s;}
-function startReload(e){const w=wOf(e),a=curAmmo(e);if(w.cat==='knife'||e.rel||a[0]>=w.mag||a[1]<=0)return;e.rel=true;e.relT=w.shell?w.rel+.25:w.rel;e.aimOn=false;e.zoomI=0;
+function startReload(e){if(INF_AMMO)return;const w=wOf(e),a=curAmmo(e);if(w.cat==='knife'||e.rel||a[0]>=w.mag||a[1]<=0)return;e.rel=true;e.relT=w.shell?w.rel+.25:w.rel;e.aimOn=false;e.zoomI=0;
   if(e===ME_E()||G.spec===e.id)sfx.reload();}
 function tickWeapon(e,dt){const w=wOf(e);if(e.fireT>0)e.fireT-=dt;if(e.swT>0)e.swT-=dt;
   e.recoil=Math.max(0,e.recoil-dt*(e.fireT>0?1.5:7));e.kickP*=Math.exp(-dt*(e.fireT>0?2.5:6));e.kickY*=Math.exp(-dt*5);
@@ -1347,7 +1349,7 @@ function canFire(e){const w=wOf(e);if(!e.alive||e.fireT>0||e.swT>.05)return fals
 // tembak — pulang true jika menembak
 function fire(e){if(!canFire(e))return false;const w=wOf(e);e.fireT=w.rate;e.lastShotT=G.time;e._clk=0;
   if(w.cat==='knife'){knifeHit(e);sfxAt('k',e);return true;}
-  const a=curAmmo(e);a[0]--;e.shots++;
+  const a=curAmmo(e);if(!INF_AMMO)a[0]--;e.shots++;
   const eye=eyeOf(e),sp=spreadOf(e),n=w.pel||1,res={};const base=aimDir(e);const B=camBasis(e.yaw+e.kickY,e.pitch+e.kickP);
   let firstEnd=null;
   for(let i=0;i<n;i++){const ang=Math.random()*TAU,rr=sp*Math.sqrt(Math.random())*(n>1?1:(Math.random()<.7?.6:1));
@@ -1360,7 +1362,7 @@ function fire(e){if(!canFire(e))return false;const w=wOf(e);e.fireT=w.rate;e.las
     else if(h.n){impactFx(end,h.n,i===0);}
     if(i<3)G.tracers.push({a:muzzleOf(e),b:end,t:.07,own:e.id===G.me});}
   // rekoil
-  const kk=w.kick*(e.bot?(1-G.botP.spray*.7):1);e.kickP+=kk*.012*(1+Math.min(e.recoil,8)*.12);e.kickY+=(Math.random()-.5)*kk*.008*(1+e.recoil*.15);e.recoil+=1;
+  const kk=w.kick*(e.bot?(1-G.botP.spray*.7):1);e.kickP=Math.min(.11,e.kickP+kk*.012*(1+Math.min(e.recoil,8)*.12));e.kickY+=(Math.random()-.5)*kk*.008*(1+e.recoil*.15);e.recoil+=1;
   if(e===ME_E()){G.shake=Math.max(G.shake,w.kick*.4);vib(w.cat==='sniper'||w.cat==='shotgun'?25:8);}
   e.flashT=.05;sfxAt(w.snd,e);if(!w.sil)G.noise.push({x:e.x,z:e.z,t:G.time,team:e.team,id:e.id});
   // kerosakan
@@ -1606,9 +1608,9 @@ function getCam(){const me=ME_E();let v=me,free=false;
 
 /* ---------- Bingkai ---------- */
 let fovCur=0;
-function resizeGL(){const cv=GL.cv;const q=[.62,.85,1][S.gfx==null?1:S.gfx];const dpr=Math.min(2,window.devicePixelRatio||1)*q;
+function resizeGL(){const cv=GL.cv;const q=[.62,.85,1][S.gfx==null?1:S.gfx];const dpr=Math.min(2,window.devicePixelRatio||1)*q*UIZ;
   const w=Math.max(2,Math.round(cv.clientWidth*dpr)),h=Math.max(2,Math.round(cv.clientHeight*dpr));if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
-  const hc=$('hud2'),d2=Math.min(2,window.devicePixelRatio||1),w2=Math.round(hc.clientWidth*d2),h2=Math.round(hc.clientHeight*d2);if(hc.width!==w2||hc.height!==h2){hc.width=w2;hc.height=h2;}}
+  const hc=$('hud2'),d2=Math.min(2,window.devicePixelRatio||1)*UIZ,w2=Math.round(hc.clientWidth*d2),h2=Math.round(hc.clientHeight*d2);if(hc.width!==w2||hc.height!==h2){hc.width=w2;hc.height=h2;}}
 function renderGame(dt){if(!GL.ok)return;const gl=GL.gl,th=MAP.th;resizeGL();const cv=GL.cv,W=cv.width,H=cv.height,asp=W/H;
   const cam=getCam();const hf=90*D2R;const baseFy=2*Math.atan(Math.tan(hf/2)/asp);const fy=2*Math.atan(Math.tan(baseFy/2)/cam.zoom);
   fovCur=fovCur?lerp(fovCur,fy,Math.min(1,dt*18)):fy;
@@ -1634,7 +1636,7 @@ function renderGame(dt){if(!GL.ok)return;const gl=GL.gl,th=MAP.th;resizeGL();con
 }
 
 /* ---------- HUD kanvas ---------- */
-function drawHUD(dt){const c=$('hud2'),x=c.getContext('2d'),d=Math.min(2,window.devicePixelRatio||1),W=c.width/d,H=c.height/d;x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,W,H);
+function drawHUD(dt){const c=$('hud2'),x=c.getContext('2d'),d=Math.min(2,window.devicePixelRatio||1)*UIZ,W=c.width/d,H=c.height/d;x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,W,H);
   const me=ME_E(),cam=G.cam;if(!me||!cam)return;const cx=W/2,cy=H/2,v=cam.v;
   // skop
   if(cam.scoped){const r=Math.min(W,H)*.46;x.fillStyle='#000';x.beginPath();x.rect(0,0,W,H);x.arc(cx,cy,r,0,TAU,true);x.fill();
@@ -1698,6 +1700,7 @@ function lookAdd(dx,dy,mouse){const z=G.cam?G.cam.zoom:1,k=(mouse?.0021*(S.msens
     b.addEventListener('pointerup',u);b.addEventListener('pointercancel',u);});
 })();
 const IS_TOUCH=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+let UIZ=1; // skala paparan (besar untuk PC)
 function padAct(a,down){const me=ME_E();if(!G.on||!me)return;
   if(!me.alive){if(down&&a==='fire')nextSpec();return;}
   if(a==='jump'&&down)IN.jumpQ=true;
@@ -1715,7 +1718,7 @@ document.addEventListener('mousemove',e=>{if(document.pointerLockElement===$('ct
 document.addEventListener('mousedown',e=>{if(document.pointerLockElement!==$('ctl')||!G.on)return;const me=ME_E();if(e.button===0){IN.mouseFire=true;IN.fire=true;if(me&&!me.alive)nextSpec();}else if(e.button===2&&me)toggleAim(me);});
 document.addEventListener('mouseup',e=>{if(e.button===0){IN.mouseFire=false;IN.fire=IN.firePtr.size>0||!!IN.keyFire;}});
 /* ---------- Kekunci boleh ubah (mod PC) ---------- */
-const KACTS=[['fwd','kFwd'],['back','kBack'],['left','kLeft'],['right','kRight'],['jump','kJump'],['crouch','kCrouch'],['fire','kFire'],['aim','kAim'],['reload','kReload'],
+const KACTS=[['fwd','kFwd'],['back','kBack'],['left','kLeft'],['right','kRight'],['jump','kJump'],['crouch','kCrouch'],['fire','kFire'],['aim','kAim'],
   ['s1','kS1'],['s2','kS2'],['s3','kS3'],['nade','kNade'],['smoke','kSmoke'],['lookL','kLookL'],['lookR','kLookR'],['lookU','kLookU'],['lookD','kLookD'],['buy','kBuy'],['board','kBoard']];
 const KPRESET={
  wasd:{fwd:['KeyW'],back:['KeyS'],left:['KeyA'],right:['KeyD'],jump:['Space'],crouch:['KeyC','ControlLeft'],fire:['KeyE'],aim:['KeyQ'],reload:['KeyR'],s1:['Digit1'],s2:['Digit2'],s3:['Digit3'],
@@ -1850,7 +1853,7 @@ function hudDOM(){const R=G.R,me=ME_E();if(!me)return;
   if(HC.alA!==al[0]){HC.alA=al[0];$('aliveA').innerHTML=al[0];}if(HC.alB!==al[1]){HC.alB=al[1];$('aliveB').innerHTML=al[1];}
   const v=me.alive?me:(G.E[G.spec]||me);const w=wOf(v),a=curAmmo(v);
   setT('hpN',Math.ceil(v.hp));if(HC.hpw!==v.hp){HC.hpw=v.hp;$('hpBar').style.width=v.hp+'%';$('hpBox').classList.toggle('low',v.hp<35);}
-  setT('ammoN',w.cat==='knife'?'🔪':(v.rel?'⟳':a[0]));setT('ammoR',w.cat==='knife'?'∞':('/ '+a[1]));$('ammoBox').classList.toggle('empty',w.cat!=='knife'&&a[0]===0);
+  setT('ammoN',w.cat==='knife'?'🔪':(INF_AMMO?'∞':(v.rel?'⟳':a[0])));setT('ammoR',INF_AMMO||w.cat==='knife'?w.n:('/ '+a[1]));$('ammoBox').classList.toggle('empty',!INF_AMMO&&w.cat!=='knife'&&a[0]===0);
   const sk=me.load.pri+'|'+me.load.sec+'|'+me.cur;if(HC.slots!==sk){HC.slots=sk;buildSlots(me);}
   const buy=canBuy();if(HC.buy!==buy){HC.buy=buy;$('buyBtn').classList.toggle('on',buy);if(!buy&&$('buy').classList.contains('on')&&G.mode!=='train')closeBuy();}
   if(buy&&G.mode!=='train'){const bl=Math.ceil(buyLeft());setT('buyT',bl+'s');setT('buyTmr','⏳ '+bl+'s');}else{setT('buyT','');setT('buyTmr','');}
@@ -1866,7 +1869,7 @@ function slotTap(s){const me=ME_E();if(me&&me.alive){switchTo(me,s);sfx.tap();}}
 let bigT=null;function showBig(a,b){const e=$('bigMsg');e.innerHTML=esc(a)+(b?`<small>${esc(b)}</small>`:'');e.classList.remove('on');void e.offsetWidth;e.classList.add('on');clearTimeout(bigT);bigT=setTimeout(()=>e.classList.remove('on'),2200);}
 /* ============ i18n ============ */
 const T={
-ms:{pcMode:'Main guna PC / laptop',pcModeS:'Papan kekunci + tetikus. Butang skrin sentuh disembunyikan',msens:'Kepekaan tetikus',kpT:'Susunan kekunci',kpW:'⌨️ WASD',kpA:'⬆️ Anak Panah',kpN:'🔢 Nombor',kpDone:'Susunan kekunci ditukar',kpHint:'Tekan butang kekunci, kemudian tekan kekunci baru (Backspace = kosong, Esc = batal)',pressKey:'Tekan kekunci…',
+ms:{uizT:'Saiz paparan (ikon & butang)',uizS:'Auto = paling besar yang muat skrin',pcMode:'Main guna PC / laptop',pcModeS:'Papan kekunci + tetikus. Butang skrin sentuh disembunyikan',msens:'Kepekaan tetikus',kpT:'Susunan kekunci',kpW:'⌨️ WASD',kpA:'⬆️ Anak Panah',kpN:'🔢 Nombor',kpDone:'Susunan kekunci ditukar',kpHint:'Tekan butang kekunci, kemudian tekan kekunci baru (Backspace = kosong, Esc = batal)',pressKey:'Tekan kekunci…',
  kFwd:'Maju',kBack:'Undur',kLeft:'Kiri',kRight:'Kanan',kJump:'Lompat',kCrouch:'Tunduk (tahan)',kFire:'Tembak (kekunci)',kAim:'Skop / zum',kReload:'Isi peluru',kS1:'Senjata utama',kS2:'Pistol',kS3:'Pisau',kNade:'Bom tangan',kSmoke:'Bom asap',
  kLookL:'Pandang kiri',kLookR:'Pandang kanan',kLookU:'Pandang atas',kLookD:'Pandang bawah',kBuy:'Menu senjata',kBoard:'Papan skor (tahan)',kMouse:'Tetikus',kMouseD:'gerak = pandang · kiri = tembak · kanan = skop',kPause:'Rehat',kReset:'Set semula',touchT:'Kawalan skrin sentuh',vsBot:'Misi Bot',vsBotSub:'10 kawasan · lawan pasukan bot',online:'Lawan Online',onlineSub:'1v1 · 2v2 · 3v3 dengan kawan bot',onlineP:'Main dengan pemain sebenar. Kalau 1 lawan 1, setiap pasukan dilengkapkan dengan kawan bot. Menang untuk naik rating!',
  train:'Latihan',rank:'Ranking',set:'Tetapan',back:'Kembali',cancel:'Batal',play:'Main',next:'Seterusnya',
@@ -1874,7 +1877,7 @@ ms:{pcMode:'Main guna PC / laptop',pcModeS:'Papan kekunci + tetikus. Butang skri
  player:'Pemain',weapons:'SENJATA',buyTitle:'Pilih Senjata (semua percuma!)',random:'Rawak',done:'Siap ✓',killsT:'Bunuh',
  name:'Nama pemain',lang:'Bahasa',sens:'Kepekaan pandangan',autoFire:'Tembak automatik',autoFireS:'Tembak sendiri bila crosshair pada musuh',assist:'Bantuan bidik',assistS:'Crosshair melekat sedikit pada musuh',leftFire:'Butang tembak kiri',
  gfx:'Kualiti grafik',gLow:'Rendah',gMed:'Sederhana',gHigh:'Tinggi',sound:'Bunyi',vib:'Getaran',bigBtn:'Butang kawalan besar',version:'Versi',checkUpd:'Semak Kemas Kini',howTitle:'Cara main',
- how:['🕹️|Joystick kiri: bergerak','👆|Seret di sebelah kanan skrin: pandang / bidik','🔫|Tekan TEMBAK (boleh seret untuk bidik sambil tembak)','🎯|SKOP: zum (sniper tekan 2x untuk zum lebih)','🔄|ISI: isi semula peluru · ⤴️ lompat · ⬇️ tunduk (lebih tepat)','💣|Bom tangan · 💨 bom asap (sekat pandangan)','🛒|SENJATA: pilih mana-mana senapang di awal pusingan','🏆|Hapuskan semua musuh untuk menang pusingan. Pertama 4 pusingan menang!','⌨️|PC: hidupkan "Main guna PC" dalam Tetapan & pilih susunan kekunci (WASD / Anak Panah / Nombor) atau ubah sendiri'],
+ how:['🕹️|Joystick kiri: bergerak','👆|Seret di sebelah kanan skrin: pandang / bidik','🔫|Tekan TEMBAK (boleh seret untuk bidik sambil tembak)','🎯|SKOP: zum (sniper tekan 2x untuk zum lebih)','♾️|Peluru tanpa had — tak perlu isi semula · ⤴️ lompat · ⬇️ tunduk (lebih tepat)','💣|Bom tangan · 💨 bom asap (sekat pandangan)','🛒|SENJATA: pilih mana-mana senapang di awal pusingan','🏆|Hapuskan semua musuh untuk menang pusingan. Pertama 4 pusingan menang!','⌨️|PC: hidupkan "Main guna PC" dalam Tetapan & pilih susunan kekunci (WASD / Anak Panah / Nombor) atau ubah sendiri'],
  mystats:'Statistik saya',iosTitle:'Pasang di iPhone / iPad',copyLink:'Salin Link',shareLink:'Kongsi',qrSub:'Imbas dengan kamera iPhone',
  ios1:'Buka link dalam Safari (bukan Chrome)',ios2:'Tekan butang Share ⬆️ di bawah skrin',ios3:'Pilih "Add to Home Screen" → Add',ios4:'Buka ProStrike dari ikon di skrin utama',ios5:'Pusingkan telefon ke melintang (landscape) & matikan Rotation Lock jika perlu',
  iosTip:'Main skrin penuh di iPhone: pasang ke Home Screen',howInstall:'Cara',gotIt:'Faham!',iosWhy:'ProStrike boleh dimain terus dalam Safari, tetapi lebih baik dipasang ke Home Screen — skrin penuh & online berfungsi sama macam Android.',copied:'Link disalin ✓ Tampal dalam Safari',shareTxt:'Jom lawan aku dalam ProStrike! Buka dalam Safari:',
@@ -1896,7 +1899,7 @@ ms:{pcMode:'Main guna PC / laptop',pcModeS:'Papan kekunci + tetikus. Butang skri
  noNet:'firebaseConfig belum ditampal dalam index.html.',noSdk:'Gagal sambung ke Firebase. Semak internet & cuba lagi.',noAuth:'Gagal log masuk Firebase. Pastikan Anonymous sign-in di-enable.',offline:'Tiada sambungan internet',online1:'Online',
  rulesOld:'Ranking tak dapat disimpan — Publish fail firestore.rules di Firebase',syncErr:'Profil anda belum masuk ranking. Semak internet / Firestore Rules',newSeason:'Ranking musim baru bermula!',tier:'Pangkat',you:'ANDA',rematchW:'{n} ajak main lagi!',waitRematch:'Menunggu pemain lain…',
  trainTip:'Tembak sasaran 🎯. Tekan SENJATA untuk cuba semua senapang.',clickTip:'Klik skrin untuk kawal dengan tetikus'},
-en:{pcMode:'Play with PC / laptop',pcModeS:'Keyboard + mouse. Touch buttons are hidden',msens:'Mouse sensitivity',kpT:'Key layout',kpW:'⌨️ WASD',kpA:'⬆️ Arrows',kpN:'🔢 Numbers',kpDone:'Key layout changed',kpHint:'Tap a key button, then press the new key (Backspace = clear, Esc = cancel)',pressKey:'Press a key…',
+en:{uizT:'Display size (icons & buttons)',uizS:'Auto = largest that fits the screen',pcMode:'Play with PC / laptop',pcModeS:'Keyboard + mouse. Touch buttons are hidden',msens:'Mouse sensitivity',kpT:'Key layout',kpW:'⌨️ WASD',kpA:'⬆️ Arrows',kpN:'🔢 Numbers',kpDone:'Key layout changed',kpHint:'Tap a key button, then press the new key (Backspace = clear, Esc = cancel)',pressKey:'Press a key…',
  kFwd:'Forward',kBack:'Back',kLeft:'Left',kRight:'Right',kJump:'Jump',kCrouch:'Crouch (hold)',kFire:'Fire (key)',kAim:'Scope / zoom',kReload:'Reload',kS1:'Main weapon',kS2:'Pistol',kS3:'Knife',kNade:'Grenade',kSmoke:'Smoke',
  kLookL:'Look left',kLookR:'Look right',kLookU:'Look up',kLookD:'Look down',kBuy:'Weapon menu',kBoard:'Scoreboard (hold)',kMouse:'Mouse',kMouseD:'move = look · left = fire · right = scope',kPause:'Pause',kReset:'Reset',touchT:'Touch controls',vsBot:'Bot Missions',vsBotSub:'10 areas · fight bot squads',online:'Play Online',onlineSub:'1v1 · 2v2 · 3v3 with bot teammates',onlineP:'Play real players. In 1v1 each team is filled with bot teammates. Win to raise your rating!',
  train:'Training',rank:'Ranking',set:'Settings',back:'Back',cancel:'Cancel',play:'Play',next:'Next',
@@ -1904,7 +1907,7 @@ en:{pcMode:'Play with PC / laptop',pcModeS:'Keyboard + mouse. Touch buttons are 
  player:'Player',weapons:'WEAPONS',buyTitle:'Choose Weapons (all free!)',random:'Random',done:'Done ✓',killsT:'Kills',
  name:'Player name',lang:'Language',sens:'Look sensitivity',autoFire:'Auto fire',autoFireS:'Fires when the crosshair is on an enemy',assist:'Aim assist',assistS:'Crosshair sticks slightly to enemies',leftFire:'Left fire button',
  gfx:'Graphics quality',gLow:'Low',gMed:'Medium',gHigh:'High',sound:'Sound',vib:'Vibration',bigBtn:'Large control buttons',version:'Version',checkUpd:'Check for Update',howTitle:'How to play',
- how:['🕹️|Left joystick: move','👆|Drag on the right side: look / aim','🔫|Hold FIRE (drag it to aim while shooting)','🎯|SCOPE: zoom (snipers tap twice for more zoom)','🔄|RELOAD · ⤴️ jump · ⬇️ crouch (more accurate)','💣|Grenade · 💨 smoke (blocks vision)','🛒|WEAPONS: pick any gun at the start of a round','🏆|Eliminate all enemies to win a round. First to 4 rounds wins!','⌨️|PC: turn on "Play with PC" in Settings & pick a key layout (WASD / Arrows / Numbers) or set your own'],
+ how:['🕹️|Left joystick: move','👆|Drag on the right side: look / aim','🔫|Hold FIRE (drag it to aim while shooting)','🎯|SCOPE: zoom (snipers tap twice for more zoom)','♾️|Unlimited ammo — no reloading · ⤴️ jump · ⬇️ crouch (more accurate)','💣|Grenade · 💨 smoke (blocks vision)','🛒|WEAPONS: pick any gun at the start of a round','🏆|Eliminate all enemies to win a round. First to 4 rounds wins!','⌨️|PC: turn on "Play with PC" in Settings & pick a key layout (WASD / Arrows / Numbers) or set your own'],
  mystats:'My stats',iosTitle:'Install on iPhone / iPad',copyLink:'Copy Link',shareLink:'Share',qrSub:'Scan with iPhone camera',
  ios1:'Open the link in Safari (not Chrome)',ios2:'Tap the Share button ⬆️ at the bottom',ios3:'Choose "Add to Home Screen" → Add',ios4:'Open ProStrike from the home screen icon',ios5:'Turn the phone sideways (landscape) & switch off Rotation Lock if needed',
  iosTip:'Play full screen on iPhone: add to Home Screen',howInstall:'How',gotIt:'Got it!',iosWhy:'ProStrike runs in Safari, but it is best added to the Home Screen — full screen, and online works the same as on Android.',copied:'Link copied ✓ Paste it in Safari',shareTxt:'Fight me in ProStrike! Open in Safari:',
@@ -1954,7 +1957,13 @@ function setLang(l){S.lang=l;LS.set('settings',S);applyLang();refreshHome();refr
 function toggleSet(k){S[k]=!S[k];LS.set('settings',S);refreshSet();applySet();}
 function setSens(v){S.sens=+v;LS.set('settings',S);$('sensV').textContent='x'+(+v).toFixed(2);}
 function setGfx(q){S.gfx=q;LS.set('settings',S);refreshSet();}
-function applySet(){document.body.classList.toggle('bigPads',!!S.big);document.body.classList.toggle('pcMode',!!S.pc);$('pFireL').style.display=S.leftFire&&!S.pc?'':'none';
+// Skala paparan: dalam mod PC semua ikon/butang dibesarkan ikut saiz skrin (sehingga maksimum yang muat)
+function calcUIZ(){if(!S.pc&&IS_TOUCH)return 1;const auto=clamp(Math.min(innerWidth/860,innerHeight/430),1,3);return S.uiz==='auto'||S.uiz==null?auto:clamp(+S.uiz,1,auto);}
+function applyZoom(){const z=calcUIZ();if(Math.abs(z-UIZ)<.005&&document.documentElement.style.zoom)return;UIZ=z;document.documentElement.style.zoom=z>1.001?z:'';
+  if($('uizV'))$('uizV').textContent=(S.uiz==='auto'||S.uiz==null?'Auto ':'')+'x'+z.toFixed(2);checkRot();}
+addEventListener('resize',()=>applyZoom());
+function setUIZ(v){S.uiz=v;LS.set('settings',S);applyZoom();refreshSet();}
+function applySet(){applyZoom();document.body.classList.toggle('bigPads',!!S.big);document.body.classList.toggle('pcMode',!!S.pc);$('pFireL').style.display=S.leftFire&&!S.pc?'':'none';
   const tc=S.pc?'none':'';document.querySelectorAll('#ctl .pad,.jb').forEach(e=>{if(e.id!=='pFireL')e.style.display=tc;});$('pcBox').style.display=S.pc?'':'none';$('touchBox').style.display=S.pc?'none':'';}
 function setMSens(v){S.msens=+v;LS.set('settings',S);$('msensV').textContent='x'+(+v).toFixed(2);}
 function setPreset(k){S.kp=k;S.keys=JSON.parse(JSON.stringify(KPRESET[k]));LS.set('settings',S);renderKeys();sfx.tap();toast('⌨️ '+t('kpDone'));}
@@ -1965,7 +1974,7 @@ function renderKeys(){document.querySelectorAll('#kpSeg button').forEach(b=>b.cl
 function startCap(a){KB_CAP=a;renderKeys();sfx.tap();}
 function kbCapture(code){const a=KB_CAP;KB_CAP=null;if(code!=='Escape'){if(code==='Backspace'||code==='Delete')S.keys[a]=[];else{for(const[b]of KACTS){if(b!==a&&(S.keys[b]||[]).includes(code))S.keys[b]=S.keys[b].filter(c=>c!==code);}S.keys[a]=[code];}S.kp='custom';LS.set('settings',S);}
   renderKeys();sfx.tap();}
-function refreshSet(){$('tPc').classList.toggle('on',!!S.pc);$('rMSens').value=S.msens||1;$('msensV').textContent='x'+(+(S.msens||1)).toFixed(2);renderKeys();$('tSound').classList.toggle('on',S.sound);$('tVib').classList.toggle('on',S.vib);$('tBig').classList.toggle('on',!!S.big);$('tAuto').classList.toggle('on',!!S.auto);$('tAssist').classList.toggle('on',!!S.assist);$('tLeftF').classList.toggle('on',!!S.leftFire);
+function refreshSet(){if($('uizSeg'))document.querySelectorAll('#uizSeg button').forEach(b=>b.classList.toggle('on',b.dataset.z===String(S.uiz==null?'auto':S.uiz)));if($('uizV'))$('uizV').textContent='x'+UIZ.toFixed(2);$('tPc').classList.toggle('on',!!S.pc);$('rMSens').value=S.msens||1;$('msensV').textContent='x'+(+(S.msens||1)).toFixed(2);renderKeys();$('tSound').classList.toggle('on',S.sound);$('tVib').classList.toggle('on',S.vib);$('tBig').classList.toggle('on',!!S.big);$('tAuto').classList.toggle('on',!!S.auto);$('tAssist').classList.toggle('on',!!S.assist);$('tLeftF').classList.toggle('on',!!S.leftFire);
   $('rSens').value=S.sens;$('sensV').textContent='x'+(+S.sens).toFixed(2);document.querySelectorAll('#gfxSeg button').forEach(b=>b.classList.toggle('on',+b.dataset.q===S.gfx));$('sName').textContent=ME.name||'—';
   const kd=ME.deaths?(ME.kills/ME.deaths).toFixed(2):ME.kills;
   $('myStats').innerHTML=`<div><b>${ME.rating}</b><span>${tierTxt(ME.rating)}</span></div><div><b>${ME.wins}-${ME.losses}</b><span>🌐 ${t('wins')}-${t('losses')}</span></div><div><b>${ME.bw||0}</b><span>🤖 ${t('wins')}</span></div>
@@ -1992,10 +2001,10 @@ function saveName(){const n=$('nameInp').value.trim().replace(/\s+/g,' ').slice(
   ME.name=n;LS.set('me',ME);closeM('mName');refreshHome();refreshSet();pushProfile();beat();toast(t('saved')+' ✓');}
 function addXP(x){const before=lvlOf(ME.xp);ME.xp=(ME.xp||0)+x;LS.set('me',ME);const after=lvlOf(ME.xp);
   if(after>before)setTimeout(()=>{toast(t('lvUp').replace('{n}',after));confetti(160);sfx.win();},1400);pushProfile();}
-function checkRot(){const s=curScreen();document.body.classList.toggle('needLand',s==='sGame'&&innerHeight>innerWidth*1.05);}
+function checkRot(){const s=curScreen();document.body.classList.toggle('needLand',s==='sGame'&&innerHeight>innerWidth*1.05&&IS_TOUCH&&!S.pc);}
 addEventListener('resize',checkRot);addEventListener('orientationchange',()=>setTimeout(checkRot,300));
 const FX2={p:[],run:false};
-function confetti(n=160){const c=$('fx');c.width=innerWidth;c.height=innerHeight;const cols=['#fbbf24','#f5b83d','#3ecf8e','#60a5fa','#f472b6','#fff','#ff4d4d'];
+function confetti(n=160){const c=$('fx');c.width=innerWidth/UIZ;c.height=innerHeight/UIZ;const cols=['#fbbf24','#f5b83d','#3ecf8e','#60a5fa','#f472b6','#fff','#ff4d4d'];
   for(let i=0;i<n;i++)FX2.p.push({x:c.width/2+(Math.random()-.5)*80,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,g:.35,r:Math.random()*8+4,a:Math.random()*6,va:(Math.random()-.5)*.3,c:cols[i%cols.length],life:140+Math.random()*60});
   if(!FX2.run){FX2.run=true;(function lp(){const x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);FX2.p=FX2.p.filter(p=>--p.life>0);
     for(const p of FX2.p){p.vy+=p.g;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.globalAlpha=Math.min(1,p.life/40);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore();}
@@ -2014,7 +2023,7 @@ function homeScene(){if(HOME||!GL.ok)return;const i=Math.floor(Math.random()*MAP
   MAP=saved;}
 function startHome(){glTo('home');if(!GL.ok)return;homeScene();if(homeOn)return;homeOn=true;requestAnimationFrame(homeLoop);}
 function homeLoop(ts){if(curScreen()!=='sHome'||G.on){homeOn=false;return;}requestAnimationFrame(homeLoop);if(document.hidden||thumbBusy)return;
-  homeT+=.016;const M=HOME.M,th=M.th,gl=GL.gl,cv=GL.cv;const q=Math.min(1.5,window.devicePixelRatio||1)*.8;const w=Math.round(cv.clientWidth*q),h=Math.round(cv.clientHeight*q);if(!w||!h)return;
+  homeT+=.016;const M=HOME.M,th=M.th,gl=GL.gl,cv=GL.cv;const q=Math.min(1.5,window.devicePixelRatio||1)*.8*UIZ;const w=Math.round(cv.clientWidth*q),h=Math.round(cv.clientHeight*q);if(!w||!h)return;
   if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
   const cx=M.W*CS/2,cz=M.H*CS/2,a=homeT*.06,R=14;const eye=[cx+Math.cos(a)*R,5.5+Math.sin(homeT*.2)*.8,cz+Math.sin(a)*R];
   const yaw=Math.atan2(cx-eye[0],-(cz-eye[2])),pitch=-.2;const B=camBasis(yaw,pitch);const asp=w/h,fy=2*Math.atan(Math.tan(40*D2R)/Math.max(asp,1)*1.1);

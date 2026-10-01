@@ -18,7 +18,7 @@ Setiap pusingan: 4 saat bersedia → 1:45 bertempur. Mati = tonton rakan sepasuk
 | LMG | LMG-100 (100 peluru) |
 | Lain | 🔪 Kerambit (tikam dari belakang = mati) · 💣 Bom tangan · 💨 Bom asap |
 
-Tembakan kepala = kerosakan x4 (raifal). Tunduk & berdiri diam = lebih tepat. Berlari/melompat = kurang tepat. Rekoil naik bila tembak lama.
+**Peluru tanpa had** — tak perlu isi semula (butang ISI dibuang). Tembakan kepala = kerosakan x4 (raifal). Tunduk & berdiri diam = lebih tepat. Berlari/melompat = kurang tepat. Rekoil naik bila tembak lama.
 
 ## 10 Kawasan (Level)
 1 Kampung · 2 Gudang · 3 Pelabuhan · 4 Padang Pasir · 5 Hutan · 6 Bandar · 7 Kilang · 8 Pangkalan Salji · 9 Stesen MRT · 10 Istana Malam
@@ -41,6 +41,7 @@ Tembakan kepala = kerosakan x4 (raifal). Tunduk & berdiri diam = lebih tepat. Be
 **Tetapan:** kepekaan pandangan, **tembak automatik** (tembak sendiri bila crosshair pada musuh — sesuai budak/pemula), **bantuan bidik**, butang tembak kiri, kualiti grafik, butang besar.
 **PC / laptop:** Tetapan → hidupkan **Main guna PC** (lalai ON bila dibuka di komputer). Semua butang skrin sentuh disembunyikan; kawal guna papan kekunci + tetikus (klik skrin untuk kunci tetikus, Esc = rehat).
 - **Susunan kekunci siap:** ⌨️ WASD · ⬆️ Anak Panah (gerak guna anak panah, pandang guna W/A/S/D, tembak X, skop Z) · 🔢 Nombor (gerak 8/4/5/6 pada numpad atau baris nombor, tembak Enter).
+- **Saiz paparan:** dalam mod PC semua ikon, butang, peta mini & HUD dibesarkan ikut saiz skrin. Pilih S / M / L / **MAX** (lalai MAX = paling besar yang muat).
 - **Ubah sendiri:** tekan butang kekunci dalam senarai → tekan kekunci baru (Backspace = kosongkan, Esc = batal). Kekunci yang sama dibuang dari tindakan lain secara automatik.
 - Ada kekunci **pandang kiri/kanan/atas/bawah** — sesuai untuk laptop guna touchpad. **Kepekaan tetikus** boleh dilaras berasingan.
 
